@@ -1,0 +1,13 @@
+---
+
+firewall_open_tcp_ports:
+  - 22
+firewall_open_udp_ports: []
+firewall_whitelisted_hosts: []
+firewall_blacklisted_hosts: []
+firewall_logging: 'low'
+firewall_custom_rules: []
+
+firewall_kernel_modules: []
+firewall_enable_ipv6: true
+firewall_reset: false

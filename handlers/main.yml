@@ -1,0 +1,7 @@
+---
+
+- name: ufw disable
+  command: ufw disable
+
+- name: ufw enable
+  command: ufw enable

@@ -1,0 +1,11 @@
+---
+
+- hosts: all
+  vars:
+    firewall_custom_rules:
+      - proto: 'tcp'
+        port: '6379'
+        policy: 'allow'
+        host: '10.5.0.0/16'
+  roles:
+    - ../../

@@ -1,0 +1,17 @@
+---
+
+- name: APT | Install ufw
+  apt: pkg=ufw update_cache=yes cache_valid_time=3600
+
+- name: UFW | Reset firewall
+  ufw: state=reset
+  when: firewall_reset
+
+- name: INCLUDE | Config
+  include: config.yml
+
+- name: INCLUDE | Firewall
+  include: firewall.yml
+
+- name: UFW | Enable firewall
+  ufw: state=enabled

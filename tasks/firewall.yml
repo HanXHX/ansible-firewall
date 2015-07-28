@@ -1,0 +1,29 @@
+---
+
+- name: UFW | Allow whitelisted hosts
+  ufw: rule=allow src={{ item }} insert=1
+  with_items: firewall_whitelisted_hosts
+
+- name: UFW | Deny blacklisted hosts
+  ufw: rule=deny src={{ item }} insert=2
+  with_items: firewall_blacklisted_hosts
+
+- name: UFW | Allow TCP ports
+  ufw: rule=allow proto=tcp port={{ item }}
+  with_items: firewall_open_tcp_ports
+
+- name: UFW | Allow UDP ports
+  ufw: rule=allow proto=udp port={{ item }}
+  with_items: firewall_open_udp_ports
+
+- name: UFW | Custom rules
+  ufw: > 
+    rule={{ item.rule | default('allow') }}
+    proto={{ item.proto | default('any') }}
+    port={{ item.port }}
+    src={{ item.host | default('any') }}
+  with_items: firewall_custom_rules
+
+- name: UFW | Log level
+  ufw: logging={{ firewall_logging }}
+

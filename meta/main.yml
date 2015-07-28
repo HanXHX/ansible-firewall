@@ -1,0 +1,19 @@
+---
+galaxy_info:
+  author: Emilien Mantel
+  description: Simple firewall for Debian/Ubuntu (with UFW)
+  company:
+  license: GPLv2
+  min_ansible_version: 1.6
+  platforms:
+  - name: Ubuntu
+    versions:
+    - all
+  - name: Debian
+    versions:
+    - all
+  categories:
+  - networking
+  - system
+dependencies: []
+
