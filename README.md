@@ -1,7 +1,18 @@
 Firewall Ansible role for Debian/Ubuntu
 =======================================
 
-Simple firewall for Debian/Ubuntu with UFW.
+Very simple firewall for Debian/Ubuntu with UFW.
+
+It uses UFW defaults policies:
+
+- INPUT: DROP
+- OUTPUT: ACCEPT
+- FORWARD : ACCEPT
+
+In this role, you manage "INPUT" chain. FORWARD/OUTPUT will be managed in further versions.
+
+Do NOT use this role, if you manage your own firewall!
+Do NOT forget to open your SSH port!
 
 Requirements
 ------------
@@ -11,7 +22,29 @@ This role uses [ufw module](http://docs.ansible.com/ansible/ufw_module.html). Yo
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+### Configuration
+
+- `firewall_ipv6`: Enable/disable IPv6 support (default is true)
+- `firewall_reset`: Reset all rules (be careful, it breaks idempotence!). Usefull when you want to clean and recreate all rules.
+- `firewall_logging`: iptables loglevel (values: on/off/low/medium/high/full, default is low)
+- `firewall_modules`: kernel modules list (useful when you need NAT+FTP). For now, you don't need to add modules (default is empty list)
+
+### Firewall
+
+- `firewall_open_tcp_ports`: Input TCP open ports list
+- `firewall_open_udp_ports`: Input UDP open ports list
+- `firewall_whitelisted_hosts`: whitelisted hosts (IP) list
+- `firewall_blacklisted_hosts`: backlisted hosts (IP) list
+- `firewall_custom_rules`: custom rule list (see bellow)
+
+### About custom rule
+
+Custom rule is a hash with:
+
+- `proto`: any/tcp/udp/ipv6/esp/ah (default: any)
+- `port`
+- `policy`: allow/deny/reject (default: allow)
+- `host`
 
 Dependencies
 ------------
@@ -31,7 +64,7 @@ Example Playbook
 
 ### Simple MySQL/MariaDB server
 
-Only webservers and whitelisted hosts can connect to MySQL:
+Only webservers (1O.0.15.0/24) and whitelisted hosts (10.255.0.12) can connect to MySQL:
 
     - hosts: mysql-servers
       vars:
@@ -42,6 +75,7 @@ Only webservers and whitelisted hosts can connect to MySQL:
           - proto: 'tcp'
             port: '3306'
             host: '1O.0.15.0/24'
+            policy: 'allow'
       roles:
          - { role: HanXHX.firewall }
 
@@ -54,4 +88,5 @@ GPLv2
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+- [Twitter](https://twitter.com/hanxhx_)
+- [Ansible Galaxy](https://galaxy.ansible.com/list#/users/11375)

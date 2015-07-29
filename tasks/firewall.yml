@@ -17,7 +17,7 @@
   with_items: firewall_open_udp_ports
 
 - name: UFW | Custom rules
-  ufw: > 
+  ufw: >
     rule={{ item.rule | default('allow') }}
     proto={{ item.proto | default('any') }}
     port={{ item.port }}
