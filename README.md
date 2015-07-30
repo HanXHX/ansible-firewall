@@ -3,7 +3,9 @@ Firewall Ansible role for Debian/Ubuntu
 
 Very simple firewall for Debian/Ubuntu with UFW.
 
-It uses UFW defaults policies:
+This role detects and opens SSH port.
+
+It uses UFW default policies:
 
 - INPUT: DROP
 - OUTPUT: ACCEPT

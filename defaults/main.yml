@@ -1,7 +1,6 @@
 ---
 
-firewall_open_tcp_ports:
-  - 22
+firewall_open_tcp_ports: []
 firewall_open_udp_ports: []
 firewall_whitelisted_hosts: []
 firewall_blacklisted_hosts: []
