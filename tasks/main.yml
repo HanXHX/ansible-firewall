@@ -15,3 +15,7 @@
 
 - name: UFW | Enable firewall
   ufw: state=enabled
+
+- name: | Include | Fail2ban
+  include: fail2ban.yml
+  when: firewall_use_fail2ban

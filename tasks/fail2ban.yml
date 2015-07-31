@@ -1,0 +1,9 @@
+---
+
+- name: APT | Install fail2ban
+  apt: pkg=fail2ban state=latest
+
+- name: Template | Configure fail2ban jail
+  file: src=etc/fail2ban/jail.local.j2 dest=/etc/fail2ban/jail.local
+  notify: restart fail2ban
+

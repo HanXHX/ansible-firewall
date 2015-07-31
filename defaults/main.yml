@@ -9,3 +9,4 @@ firewall_logging: 'low'
 firewall_kernel_modules: []
 firewall_enable_ipv6: true
 firewall_reset: false
+firewall_use_fail2ban: false
