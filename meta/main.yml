@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Emilien Mantel
-  description: Simple firewall for Debian/Ubuntu (with UFW)
+  description: Simple firewall for Debian/Ubuntu (with UFW/fail2ban)
   company:
   license: GPLv2
   min_ansible_version: 1.6
