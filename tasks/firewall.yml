@@ -1,20 +1,14 @@
 ---
 
-- name: UFW | Allow whitelisted hosts
-  ufw: rule=allow src={{ item }} insert=1
-  with_items: firewall_whitelisted_hosts
-
-- name: UFW | Deny blacklisted hosts
-  ufw: rule=deny src={{ item }} insert=2
-  with_items: firewall_blacklisted_hosts
-
 - name: SHELL | Get SSHD port
   shell: netstat -nlpt | awk '$NF ~ /sshd$/ && /^tcp / { print $4 }' | cut -d ':' -f 2
   register: sshd_port
   changed_when: false
+  when: firewall_auto_open_ssh
 
 - name: UFW | Allow current SSH port
   ufw: rule=allow proto=tcp port={{ sshd_port.stdout }}
+  when: firewall_auto_open_ssh
 
 - name: UFW | Allow TCP ports
   ufw: rule=allow proto=tcp port={{ item }}
@@ -35,3 +29,13 @@
 - name: UFW | Log level
   ufw: logging={{ firewall_logging }}
 
+- name: UFW | Enable firewall
+  ufw: state=enabled
+
+- name: UFW | Allow whitelisted hosts
+  ufw: rule=allow src={{ item }} insert=1
+  with_items: firewall_whitelisted_hosts
+
+- name: UFW | Deny blacklisted hosts
+  ufw: rule=deny src={{ item }} insert=2
+  with_items: firewall_blacklisted_hosts

@@ -2,6 +2,7 @@
 
 firewall_open_tcp_ports: []
 firewall_open_udp_ports: []
+firewall_auto_open_ssh: true
 firewall_whitelisted_hosts: []
 firewall_blacklisted_hosts: []
 firewall_custom_rules: []
@@ -10,3 +11,9 @@ firewall_kernel_modules: []
 firewall_enable_ipv6: true
 firewall_reset: false
 firewall_use_fail2ban: false
+
+firewall_fail2ban_bantime: '3600'
+firewall_fail2ban_maxretry: '4'
+firewall_fail2ban_destemail: 'root@localhost'
+firewall_fail2ban_jails: []
+
