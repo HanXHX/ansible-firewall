@@ -1,6 +1,8 @@
 Firewall Ansible role for Debian/Ubuntu
 =======================================
 
+[![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-HanXHX.firewall-blue.svg)](https://galaxy.ansible.com/list#/roles/4577)
+
 Very simple firewall for Debian/Ubuntu with UFW and fail2ban (optional).
 
 It uses UFW default policies:
