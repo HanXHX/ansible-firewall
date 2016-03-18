@@ -1,7 +1,7 @@
 Firewall Ansible role for Debian/Ubuntu
 =======================================
 
-[![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-HanXHX.firewall-blue.svg)](hhttps://galaxy.ansible.com/HanXHX/firewall/) [![Build Status](https://travis-ci.org/HanXHX/ansible-firewall.svg?branch=master)](https://travis-ci.org/HanXHX/ansible-firewall)
+[![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-HanXHX.firewall-blue.svg)](https://galaxy.ansible.com/HanXHX/firewall/) [![Build Status](https://travis-ci.org/HanXHX/ansible-firewall.svg?branch=master)](https://travis-ci.org/HanXHX/ansible-firewall)
 
 Very simple firewall for Debian/Ubuntu with UFW and fail2ban (optional).
 
