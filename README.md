@@ -89,7 +89,7 @@ Example Playbook
 
 ### Simple MySQL/MariaDB server
 
-Only webservers (1O.0.15.0/24) and whitelisted hosts (10.255.0.12) can connect to MySQL:
+Only webservers (10.0.15.0/24) and whitelisted hosts (10.255.0.12) can connect to MySQL:
 
     - hosts: mysql-servers
       vars:
@@ -98,7 +98,7 @@ Only webservers (1O.0.15.0/24) and whitelisted hosts (10.255.0.12) can connect t
         firewall_custom_rules:
           - proto: 'tcp'
             port: '3306'
-            host: '1O.0.15.0/24'
+            host: '10.0.15.0/24'
             policy: 'allow'
       roles:
          - { role: HanXHX.firewall }
@@ -113,4 +113,4 @@ Author Information
 ------------------
 
 - [Twitter](https://twitter.com/hanxhx_)
-- [Ansible Galaxy](https://galaxy.ansible.com/list#/users/11375)
+- [Ansible Galaxy](https://galaxy.ansible.com/HanXHX/)
