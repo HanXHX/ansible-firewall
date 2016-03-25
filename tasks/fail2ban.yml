@@ -1,10 +1,11 @@
 ---
 
 - name: APT | Install fail2ban
-  apt: pkg=fail2ban state=latest
+  apt: pkg=fail2ban state=present
 
-#- name: INI | Configure fail2ban
-#  ini: section=Definition
+- name: Template | Configure fail2ban
+  template: src=etc/fail2ban/fail2ban.local.j2 dest=/etc/fail2ban/fail2ban.local
+  notify: restart fail2ban
 
 - name: Template | Configure fail2ban jail
   template: src=etc/fail2ban/jail.local.j2 dest=/etc/fail2ban/jail.local
