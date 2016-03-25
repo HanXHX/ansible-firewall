@@ -6,8 +6,8 @@
 Vagrant.configure("2") do |config|
 
   vms = [
-    [ "debian-wheezy", "deb/wheezy-amd64" , "192.168.35.27" ],
-    [ "debian-jessie", "deb/jessie-amd64", "192.168.35.28" ]
+    [ "debian-wheezy", "debian/wheezy64" ],
+    [ "debian-jessie", "debian/jessie64" ]
   ]
 
   config.vm.provider "virtualbox" do |v|
@@ -18,7 +18,7 @@ Vagrant.configure("2") do |config|
   vms.each do |vm|
     config.vm.define vm[0] do |m|
       m.vm.box = vm[1]
-      m.vm.network "private_network", ip: vm[2]
+      m.vm.network "private_network", type: "dhcp"
 
       m.vm.provision "ansible" do |ansible|
         ansible.playbook = "tests/test.yml"
