@@ -1,13 +1,13 @@
 ---
 
-- name: SHELL | Get SSHD port
-  shell: netstat -nlpt | awk '$NF ~ /sshd$/ && /^tcp / { print $4 }' | cut -d ':' -f 2
-  register: sshd_port
-  changed_when: false
-  when: firewall_auto_open_ssh
+- block:
+  - name: SHELL | Get SSHD port
+    shell: netstat -nlpt | awk '$NF ~ /sshd$/ && /^tcp / { print $4 }' | cut -d ':' -f 2
+    register: sshd_port
+    changed_when: false
 
-- name: UFW | Allow current SSH port
-  ufw: rule=allow proto=tcp port={{ sshd_port.stdout }}
+  - name: UFW | Allow current SSH port
+    ufw: rule=allow proto=tcp port={{ sshd_port.stdout }}
   when: firewall_auto_open_ssh
 
 - name: UFW | Allow TCP ports
