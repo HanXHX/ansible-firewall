@@ -22,7 +22,7 @@
   ufw: >
     rule={{ item.rule | default('allow') }}
     proto={{ item.proto | default('any') }}
-    port={{ item.port }}
+    port={{ item.port | default(omit) }}
     src={{ item.host | default('any') }}
   with_items: "{{ firewall_custom_rules }}"
 

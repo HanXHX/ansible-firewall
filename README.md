@@ -51,7 +51,7 @@ Role Variables
 Custom rule is a hash with:
 
 - `proto`: any/tcp/udp/ipv6/esp/ah (default: any)
-- `port`
+- `port`: optional
 - `policy`: allow/deny/reject (default: allow)
 - `host`
 
