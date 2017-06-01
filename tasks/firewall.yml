@@ -5,6 +5,7 @@
     shell: netstat -nlpt | awk '$NF ~ /sshd$/ && /^tcp / { print $4 }' | cut -d ':' -f 2
     register: sshd_port
     changed_when: false
+    check_mode: no
 
   - name: UFW | Allow current SSH port
     ufw: rule=allow proto=tcp port={{ sshd_port.stdout }}
