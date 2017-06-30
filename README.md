@@ -3,7 +3,7 @@ Firewall Ansible role for Debian/Ubuntu
 
 [![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-HanXHX.firewall-blue.svg)](https://galaxy.ansible.com/HanXHX/firewall/) [![Build Status](https://travis-ci.org/HanXHX/ansible-firewall.svg?branch=master)](https://travis-ci.org/HanXHX/ansible-firewall)
 
-Very simple firewall for Debian/Ubuntu with UFW and fail2ban (optional).
+Very simple firewall for Debian/Ubuntu with UFW.
 
 It uses UFW default policies:
 
@@ -16,8 +16,6 @@ In this role, you manage "INPUT" chain. FORWARD/OUTPUT will be managed in furthe
 Do NOT use this role, if you manage your own firewall!
 
 Do NOT forget to open your SSH port if you don't use `firewall_auto_open_ssh`!
-
-If you don't configure fail2ban, it uses default configuration.
 
 Requirements
 ------------
@@ -54,22 +52,6 @@ Custom rule is a hash with:
 - `port`: optional
 - `policy`: allow/deny/reject (default: allow)
 - `host`
-
-### Fail2ban
-
-- `firewall_use_fail2ban`: boolean, install and configure fail2ban (default: false)
-- `firewall_fail2ban_bantime`
-- `firewall_fail2ban_maxretry`
-- `firewall_fail2ban_destemail`
-- `firewall_fail2ban_jails`: jail list
-
-### About Fail2ban jails
-
-You should see `man jail.conf`
-
-- `section`
-- `enabled`
-- ...
 
 Dependencies
 ------------

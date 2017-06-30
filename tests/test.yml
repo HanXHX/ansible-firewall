@@ -10,7 +10,6 @@
       - proto: 'udp'
         policy: 'deny'
         host: '10.6.0.0/16'
-    firewall_use_fail2ban: true
     firewall_whitelisted_hosts:
       - '10.20.30.40'
       - '192.168.0.0/24'

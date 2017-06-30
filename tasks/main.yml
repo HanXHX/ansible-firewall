@@ -12,7 +12,3 @@
 
 - name: INCLUDE | Firewall
   include: firewall.yml
-
-- name: INCLUDE | Fail2ban
-  include: fail2ban.yml
-  when: firewall_use_fail2ban

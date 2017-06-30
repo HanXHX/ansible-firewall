@@ -17,20 +17,3 @@ firewall_logging: 'low'
 firewall_kernel_modules: []
 firewall_enable_ipv6: true
 firewall_reset: false
-
-#
-# Fail2ban
-#
-firewall_use_fail2ban: false
-
-# Global configuration
-firewall_fail2ban_loglevel: null
-firewall_fail2ban_logtarget: null
-firewall_fail2ban_socket: null
-firewall_fail2ban_pidfile: null
-
-firewall_fail2ban_bantime: '3600'
-firewall_fail2ban_maxretry: '4'
-firewall_fail2ban_destemail: 'root@localhost'
-firewall_fail2ban_jails: []
-
