@@ -18,6 +18,9 @@
 
 - name: UFW | Allow TCP ports
   ufw:
+    rule: allow
+    proto: tcp
+    to_port: "{{ item }}"
   with_items: "{{ firewall_open_tcp_ports }}"
 
 - name: UFW | Allow UDP ports
