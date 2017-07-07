@@ -46,12 +46,7 @@ Role Variables
 
 ### About custom rule
 
-Custom rule is a hash with:
-
-- `proto`: any/tcp/udp/ipv6/esp/ah (default: any)
-- `port`: optional
-- `policy`: allow/deny/reject (default: allow)
-- `host`
+Custom rule is a hash. Check [UFW module doc](ihttp://docs.ansible.com/ansible/ufw_module.html). Please note routed feature is available with UFW 0.34+ (Stretch).
 
 Dependencies
 ------------

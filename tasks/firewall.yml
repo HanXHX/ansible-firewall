@@ -1,6 +1,7 @@
 ---
 
 - block:
+
   - name: SHELL | Get SSHD port
     shell: netstat -nlpt | awk '$NF ~ /sshd$/ && /^tcp / { print $4 }' | cut -d ':' -f 2
     register: sshd_port
@@ -8,23 +9,35 @@
     check_mode: no
 
   - name: UFW | Allow current SSH port
-    ufw: rule=allow proto=tcp port={{ sshd_port.stdout }}
+    ufw:
+      rule: allow
+      proto: tcp
+      to_port: "{{ sshd_port.stdout }}"
+
   when: firewall_auto_open_ssh
 
 - name: UFW | Allow TCP ports
-  ufw: rule=allow proto=tcp port={{ item }}
+  ufw:
   with_items: "{{ firewall_open_tcp_ports }}"
 
 - name: UFW | Allow UDP ports
-  ufw: rule=allow proto=udp port={{ item }}
+  ufw:
+    rule: allow
+    proto: udp
+    to_port: "{{ item }}"
   with_items: "{{ firewall_open_udp_ports }}"
 
 - name: UFW | Custom rules
-  ufw: >
-    rule={{ item.rule | default('allow') }}
-    proto={{ item.proto | default('any') }}
-    port={{ item.port | default(omit) }}
-    src={{ item.host | default('any') }}
+  ufw:
+    rule: "{{ item.rule | default('allow') }}"
+    proto: "{{ item.proto | default('any') }}"
+    from_port: "{{ item.from_port | default(omit) }}"
+    to_port: "{{ item.to_port | default(omit) }}"
+    src: "{{ item.src | default('any') }}"
+    dest: "{{ item.dest | default(omit) }}"
+    route: "{{ item.route | default(omit) }}"
+    direction: "{{ item.direction | default(omit) }}"
+    interface: "{{ item.interface | default(omit) }}"
   with_items: "{{ firewall_custom_rules }}"
 
 - name: UFW | Log level
@@ -34,9 +47,15 @@
   ufw: state=enabled
 
 - name: UFW | Allow whitelisted hosts
-  ufw: rule=allow src={{ item }} insert=1
+  ufw:
+    rule: allow
+    src: "{{ item }}"
+    insert: 1
   with_items: "{{ firewall_whitelisted_hosts }}"
 
 - name: UFW | Deny blacklisted hosts
-  ufw: rule=deny src={{ item }} insert=2
+  ufw:
+    rule: deny
+    src: "{{ item }}"
+    insert: 2
   with_items: "{{ firewall_blacklisted_hosts }}"

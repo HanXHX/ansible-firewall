@@ -1,17 +1,20 @@
 ---
 
 - hosts: all
-  vars:
-    firewall_custom_rules:
-      - proto: 'tcp'
-        port: '6379'
-        policy: 'allow'
-        host: '10.5.0.0/16'
-      - proto: 'udp'
-        policy: 'deny'
-        host: '10.6.0.0/16'
-    firewall_whitelisted_hosts:
-      - '10.20.30.40'
-      - '192.168.0.0/24'
   roles:
     - ../../
+  post_tasks:
+    - name: APT | Install debug tools
+      apt:
+        pkg: "{{ item }}"
+      with_items: ['netcat', 'tcpdump']
+
+- hosts: debian-stretch
+  tasks:
+    - name: COMMAND | Dirty masquerade
+      command: iptables -t nat -I POSTROUTING -s 10.0.2.2/32 -o eth1 -j MASQUERADE
+      changed_when: false
+
+    - name: COMMAND | Dirty port forwarding
+      command: iptables -t nat -I PREROUTING -i eth1 -p tcp --dport 45000  -j DNAT --to 10.0.2.2:45001
+      changed_when: false

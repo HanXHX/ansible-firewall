@@ -1,0 +1,14 @@
+firewall_custom_rules:
+  - proto: tcp
+    to_port: 6379
+    policy: allow
+    host: 10.5.0.0/16
+  - proto: udp
+    policy: deny
+    host: 10.6.0.0/16
+  - proto: tcp
+    policy: allow
+    dest: 10.0.2.2
+    route: yes
+    interface: eth0
+    direction: out

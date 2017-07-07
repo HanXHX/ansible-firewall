@@ -1,0 +1,12 @@
+firewall_whitelisted_hosts:
+  - 10.20.30.40
+  - 192.168.0.0/24
+
+firewall_custom_rules:
+  - proto: tcp
+    to_port: 6379
+    policy: allow
+    host: 10.5.0.0/16
+  - proto: udp
+    policy: deny
+    host: 10.6.0.0/16

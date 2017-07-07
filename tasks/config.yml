@@ -1,10 +1,16 @@
 ---
 
 - name: LINEINFILE | Enable / Disable IPv6
-  lineinfile: dest=/etc/default/ufw regexp='^IPV6=' line="IPV6={{ 'yes' if firewall_enable_ipv6 else 'no' }}"
+  lineinfile:
+    dest: /etc/default/ufw
+    regexp: '^IPV6='
+    line: "IPV6={{ 'yes' if firewall_enable_ipv6 else 'no' }}"
   notify:
     - ufw disable
     - ufw enable
 
 - name: LINEINFILE | Manage modules
-  lineinfile: dest=/etc/default/ufw regexp='^IPT_MODULES=' line="IPT_MODULES=\"{{ firewall_kernel_modules | join(' ')}}\""
+  lineinfile:
+    dest: /etc/default/ufw
+    regexp: '^IPT_MODULES='
+    line: "IPT_MODULES=\"{{ firewall_kernel_modules | join(' ') }}\""

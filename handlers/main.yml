@@ -1,7 +1,9 @@
 ---
 
 - name: ufw disable
-  command: ufw disable
+  ufw:
+   state: disabled
 
 - name: ufw enable
-  command: ufw enable
+  ufw:
+   state: enabled
