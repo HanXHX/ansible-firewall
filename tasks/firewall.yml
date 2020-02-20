@@ -3,7 +3,7 @@
 - block:
 
   - name: SHELL | Get SSHD port
-    shell: netstat -nlpt | awk '$NF ~ /sshd$/ && /^tcp / { print $4 }' | cut -d ':' -f 2
+    shell: ss -nlpt | awk '/"sshd"/ { print $4 }' | head -n 1 | cut -d ':' -f 2
     register: sshd_port
     changed_when: false
     check_mode: no
