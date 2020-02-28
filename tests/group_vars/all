@@ -2,6 +2,12 @@ firewall_whitelisted_hosts:
   - 10.20.30.40
   - 192.168.0.0/24
   - 10.0.2.0/24
+  - 2001:128::1/128
+  - 2001:48:1::/48
+
+firewall_blacklisted_hosts:
+  - 1.2.3.4
+  - 2001:bad:beef::/32
 
 firewall_custom_rules:
   - proto: tcp

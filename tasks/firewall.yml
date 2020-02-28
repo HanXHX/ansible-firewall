@@ -11,7 +11,7 @@
     rule: allow
     proto: tcp
     to_port: "{{ sshd_port.stdout }}"
-    comment: "Auto accept SSH"
+    comment: "Ansible: auto accept SSH"
   when: firewall_auto_open_ssh
 
 - name: UFW | Allow TCP ports
@@ -19,6 +19,7 @@
     rule: allow
     proto: tcp
     to_port: "{{ item }}"
+    comment: "Ansible: allow tcp port"
   with_items: "{{ firewall_open_tcp_ports }}"
 
 - name: UFW | Allow UDP ports
@@ -26,6 +27,7 @@
     rule: allow
     proto: udp
     to_port: "{{ item }}"
+    comment: "Ansible: allow tcp port"
   with_items: "{{ firewall_open_udp_ports }}"
 
 - name: UFW | Custom rules
@@ -39,6 +41,7 @@
     route: "{{ item.route | default(omit) }}"
     direction: "{{ item.direction | default(omit) }}"
     interface: "{{ item.interface | default(omit) }}"
+    comment: "Ansible: custom rule"
   with_items: "{{ firewall_custom_rules }}"
 
 - name: UFW | Log level
@@ -52,6 +55,8 @@
     rule: allow
     src: "{{ item }}"
     insert: 1
+    insert_relative_to: "{% if item | ipv6 %}first-ipv6{% else %}first-ipv4{% endif %}"
+    comment: "Ansible: whitelist"
   with_items: "{{ firewall_whitelisted_hosts }}"
 
 - name: UFW | Deny blacklisted hosts
@@ -59,6 +64,8 @@
     rule: deny
     src: "{{ item }}"
     insert: 2
+    insert_relative_to: "{% if item | ipv6 %}first-ipv6{% else %}first-ipv4{% endif %}"
+    comment: "Ansible: blacklist"
   with_items: "{{ firewall_blacklisted_hosts }}"
 
 - name: UFW | Delete current SSH port
