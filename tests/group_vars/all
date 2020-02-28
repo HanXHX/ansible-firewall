@@ -1,19 +1,29 @@
 firewall_whitelisted_hosts:
   - 10.20.30.40
-  - 192.168.0.0/24
   - 10.0.2.0/24
   - 2001:128::1/128
   - 2001:48:1::/48
+
+firewall_whitelisted_dns:
+  - google.com
+  - github.com
 
 firewall_blacklisted_hosts:
   - 1.2.3.4
   - 2001:bad:beef::/32
 
+firewall_blacklisted_dns:
+  - microsoft.com
+
 firewall_custom_rules:
   - proto: tcp
     to_port: 6379
-    policy: allow
-    host: 10.5.0.0/16
+    rule: allow
+    src: 10.5.0.0/16
   - proto: udp
-    policy: deny
-    host: 10.6.0.0/16
+    rule: deny
+    src: 10.6.0.0/16
+  - proto: tcp
+    to_port: 25
+    rule: deny
+    src: 2012:48:666::/48

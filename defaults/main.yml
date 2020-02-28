@@ -4,7 +4,9 @@
 # Common
 #
 firewall_whitelisted_hosts: []
+firewall_whitelisted_dns: []
 firewall_blacklisted_hosts: []
+firewall_blacklisted_dns: []
 
 #
 # UFW

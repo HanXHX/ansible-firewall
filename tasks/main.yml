@@ -14,5 +14,8 @@
 - name: INCLUDE | Config
   include: config.yml
 
+- name: INCLUDE | DNS
+  include: dns.yml
+
 - name: INCLUDE | Firewall
   include: firewall.yml

@@ -1,0 +1,31 @@
+---
+
+- name: SET_FACT | Prepare DNS
+  set_fact:
+    __raw_white: |
+      [
+        {% for dns in firewall_whitelisted_dns %}
+        {
+          dns: "{{ dns }}",
+          ip4: [ {% for ip4 in lookup('dig', dns + '.', 'qtype=A').split(',') if ip4 != '' %}"{{ ip4 }}"{% if not loop.last %},{% endif %}{% endfor %}  ],
+          ip6: [ {% for ip6 in lookup('dig', dns + '.', 'qtype=AAAA').split(',') if ip6 != '' %}"{{ ip6 }}"{% if not loop.last %},{% endif %}{% endfor %}  ]
+        }
+        {% if not loop.last %},{% endif %}
+        {% endfor %}
+      ]
+    __raw_black: |
+      [
+        {% for dns in firewall_blacklisted_dns %}
+        {
+          dns: "{{ dns }}",
+          ip4: [ {% for ip4 in lookup('dig', dns + '.', 'qtype=A').split(',') if ip4 != '' %}"{{ ip4 }}"{% if not loop.last %},{% endif %}{% endfor %}  ],
+          ip6: [ {% for ip6 in lookup('dig', dns + '.', 'qtype=AAAA').split(',') if ip6 != '' %}"{{ ip6 }}"{% if not loop.last %},{% endif %}{% endfor %}  ]
+        }
+        {% if not loop.last %},{% endif %}
+        {% endfor %}
+      ]
+
+- name: SET_FACT | DNS to real vars
+  set_fact:
+    __whitelist_dns: "{{ __raw_white | from_yaml }}"
+    __blacklist_dns: "{{ __raw_black | from_yaml }}"

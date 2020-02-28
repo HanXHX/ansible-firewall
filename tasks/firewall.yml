@@ -1,5 +1,65 @@
 ---
 
+# =============================================================
+# BLACKLIST
+# =============================================================
+
+- name: UFW | Deny blacklisted hosts
+  ufw:
+    rule: deny
+    src: "{{ item }}"
+    insert_relative_to: "{% if item | ipv6 %}first-ipv6{% else %}first-ipv4{% endif %}"
+    comment: "Ansible: blacklist"
+  with_items: "{{ firewall_blacklisted_hosts }}"
+
+- name: UFW | Deny Blacklisted DNS IP4
+  ufw:
+    rule: deny
+    src: "{{ item.1 }}"
+    insert_relative_to: "first-ipv4"
+    comment: "Ansible: blacklist DNS IPv4 {{ item.0.dns }}"
+  loop: "{{ __blacklist_dns | subelements('ip4') }}"
+
+- name: UFW | Deny Blacklisted DNS IP6
+  ufw:
+    rule: deny
+    src: "{{ item.1 }}"
+    insert_relative_to: "first-ipv6"
+    comment: "Ansible: blacklist DNS IPv6 {{ item.0.dns }}"
+  loop: "{{ __blacklist_dns | subelements('ip6') }}"
+
+# =============================================================
+# WHITELIST
+# =============================================================
+
+- name: UFW | Allow whitelisted hosts
+  ufw:
+    rule: allow
+    src: "{{ item }}"
+    insert_relative_to: "{% if item | ipv6 %}first-ipv6{% else %}first-ipv4{% endif %}"
+    comment: "Ansible: whitelist"
+  with_items: "{{ firewall_whitelisted_hosts }}"
+
+- name: UFW | Allow Whitelisted DNS IP4
+  ufw:
+    rule: allow
+    src: "{{ item.1 }}"
+    insert_relative_to: "first-ipv4"
+    comment: "Ansible: whitelist DNS IPv4 {{ item.0.dns }}"
+  loop: "{{ __whitelist_dns | subelements('ip4') }}"
+
+- name: UFW | Allow Whitelisted DNS IP6
+  ufw:
+    rule: allow
+    src: "{{ item.1 }}"
+    insert_relative_to: "first-ipv6"
+    comment: "Ansible: whitelist DNS IPv6 {{ item.0.dns }}"
+  loop: "{{ __whitelist_dns | subelements('ip6') }}"
+
+
+# =============================================================
+# SSH
+# =============================================================
 - name: SHELL | Get SSHD port
   shell: ss -nlpt | awk '/"sshd"/ { print $4 }' | head -n 1 | cut -d ':' -f 2
   register: sshd_port
@@ -14,12 +74,16 @@
     comment: "Ansible: auto accept SSH"
   when: firewall_auto_open_ssh
 
+# =============================================================
+# Global allow
+# =============================================================
+
 - name: UFW | Allow TCP ports
   ufw:
     rule: allow
     proto: tcp
     to_port: "{{ item }}"
-    comment: "Ansible: allow tcp port"
+    comment: "Ansible: allow TCP port"
   with_items: "{{ firewall_open_tcp_ports }}"
 
 - name: UFW | Allow UDP ports
@@ -27,8 +91,12 @@
     rule: allow
     proto: udp
     to_port: "{{ item }}"
-    comment: "Ansible: allow tcp port"
+    comment: "Ansible: allow UDP port"
   with_items: "{{ firewall_open_udp_ports }}"
+
+# =============================================================
+# Misc
+# =============================================================
 
 - name: UFW | Custom rules
   ufw:
@@ -44,25 +112,8 @@
     comment: "Ansible: custom rule"
   with_items: "{{ firewall_custom_rules }}"
 
-- name: UFW | Allow whitelisted hosts
-  ufw:
-    rule: allow
-    src: "{{ item }}"
-    insert: 1
-    insert_relative_to: "{% if item | ipv6 %}first-ipv6{% else %}first-ipv4{% endif %}"
-    comment: "Ansible: whitelist"
-  with_items: "{{ firewall_whitelisted_hosts }}"
 
-- name: UFW | Deny blacklisted hosts
-  ufw:
-    rule: deny
-    src: "{{ item }}"
-    insert: 2
-    insert_relative_to: "{% if item | ipv6 %}first-ipv6{% else %}first-ipv4{% endif %}"
-    comment: "Ansible: blacklist"
-  with_items: "{{ firewall_blacklisted_hosts }}"
-
-- name: UFW | Delete current SSH port
+- name: UFW | Delete current SSH port if needed
   ufw:
     rule: allow
     proto: tcp

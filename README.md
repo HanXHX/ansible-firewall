@@ -44,6 +44,13 @@ Role Variables
 - `firewall_blacklisted_hosts`: backlisted hosts (IP) list
 - `firewall_custom_rules`: custom rule list (see bellow)
 
+### DNS
+
+- `firewall_whitelisted_dns`: whitelisted hosts (IPv4 & IPv6) list
+- `firewall_blacklisted_dns`: backlisted hosts (IPv4 & IPv6) list
+
+Please note, DNS requests is done before insert UFW rules. You **must not** use this feature with a Dyn-DNS solution.
+
 ### About custom rule
 
 Custom rule is a hash. Check [UFW module doc](ihttp://docs.ansible.com/ansible/ufw_module.html). Please note routed feature is available with UFW 0.34+ (Stretch).
