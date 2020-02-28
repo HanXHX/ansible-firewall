@@ -6,8 +6,9 @@
   post_tasks:
     - name: APT | Install debug tools
       apt:
-        pkg: "{{ item }}"
-      with_items: ['netcat', 'tcpdump']
+        pkg: "{{ pkgs}}"
+      vars:
+        pkgs: ['netcat-openbsd', 'tcpdump']
 
 - hosts: debian-stretch
   tasks:

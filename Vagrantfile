@@ -8,7 +8,8 @@ Vagrant.configure("2") do |config|
   vms = [
     [ "debian-wheezy", "debian/wheezy64" ],
     [ "debian-jessie", "debian/jessie64" ],
-    [ "debian-stretch", "debian/stretch64" ]
+    [ "debian-stretch", "debian/stretch64" ],
+    [ "debian-buster", "debian/buster64" ]
   ]
 
   config.vm.provider "virtualbox" do |v|
@@ -24,7 +25,7 @@ Vagrant.configure("2") do |config|
       m.vm.provision "ansible" do |ansible|
         ansible.playbook = "tests/test.yml"
         ansible.verbose = 'vv'
-        ansible.sudo = true
+        ansible.become = true
       end
     end
   end
