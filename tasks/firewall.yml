@@ -44,12 +44,6 @@
     comment: "Ansible: custom rule"
   with_items: "{{ firewall_custom_rules }}"
 
-- name: UFW | Log level
-  ufw: logging={{ firewall_logging }}
-
-- name: UFW | Enable firewall
-  ufw: state=enabled
-
 - name: UFW | Allow whitelisted hosts
   ufw:
     rule: allow
@@ -75,3 +69,11 @@
     to_port: "{{ sshd_port.stdout }}"
     delete: yes
   when: not firewall_auto_open_ssh
+
+- name: UFW | Log level
+  ufw:
+    logging: "{{ firewall_logging }}"
+
+- name: UFW | Enable firewall
+  ufw:
+    state: enabled
