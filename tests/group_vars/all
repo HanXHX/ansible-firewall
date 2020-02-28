@@ -1,6 +1,7 @@
 firewall_whitelisted_hosts:
   - 10.20.30.40
   - 192.168.0.0/24
+  - 10.0.2.0/24
 
 firewall_custom_rules:
   - proto: tcp

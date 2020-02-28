@@ -1,19 +1,17 @@
 ---
 
-- block:
+- name: SHELL | Get SSHD port
+  shell: ss -nlpt | awk '/"sshd"/ { print $4 }' | head -n 1 | cut -d ':' -f 2
+  register: sshd_port
+  changed_when: false
+  check_mode: no
 
-  - name: SHELL | Get SSHD port
-    shell: ss -nlpt | awk '/"sshd"/ { print $4 }' | head -n 1 | cut -d ':' -f 2
-    register: sshd_port
-    changed_when: false
-    check_mode: no
-
-  - name: UFW | Allow current SSH port
-    ufw:
-      rule: allow
-      proto: tcp
-      to_port: "{{ sshd_port.stdout }}"
-
+- name: UFW | Allow current SSH port
+  ufw:
+    rule: allow
+    proto: tcp
+    to_port: "{{ sshd_port.stdout }}"
+    comment: "Auto accept SSH"
   when: firewall_auto_open_ssh
 
 - name: UFW | Allow TCP ports
@@ -62,3 +60,11 @@
     src: "{{ item }}"
     insert: 2
   with_items: "{{ firewall_blacklisted_hosts }}"
+
+- name: UFW | Delete current SSH port
+  ufw:
+    rule: allow
+    proto: tcp
+    to_port: "{{ sshd_port.stdout }}"
+    delete: yes
+  when: not firewall_auto_open_ssh
