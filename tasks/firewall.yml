@@ -61,7 +61,9 @@
 # SSH
 # =============================================================
 - name: SHELL | Get SSHD port
-  shell: ss -nlpt | awk '/"sshd"/ { print $4 }' | head -n 1 | cut -d ':' -f 2
+  shell: set -o pipefail && ss -nlpt | awk '/"sshd"/ { print $4 }' | head -n 1 | cut -d ':' -f 2
+  args:
+    executable: /bin/bash
   register: sshd_port
   changed_when: false
   check_mode: false

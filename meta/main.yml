@@ -1,6 +1,8 @@
 ---
 
 galaxy_info:
+  namespace: hanxhx
+  role_name: firewall
   author: Emilien Mantel
   description: Simple firewall for Debian/Ubuntu
   company:
