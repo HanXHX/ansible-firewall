@@ -3,7 +3,7 @@
 - name: APT | Install ufw
   apt:
     pkg: ufw
-    update_cache: yes
+    update_cache: true
     cache_valid_time: 3600
 
 - name: UFW | Reset firewall

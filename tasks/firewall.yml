@@ -64,7 +64,7 @@
   shell: ss -nlpt | awk '/"sshd"/ { print $4 }' | head -n 1 | cut -d ':' -f 2
   register: sshd_port
   changed_when: false
-  check_mode: no
+  check_mode: false
 
 - name: UFW | Allow current SSH port
   ufw:
@@ -118,7 +118,7 @@
     rule: allow
     proto: tcp
     to_port: "{{ sshd_port.stdout }}"
-    delete: yes
+    delete: true
   when: not firewall_auto_open_ssh
 
 - name: UFW | Log level
