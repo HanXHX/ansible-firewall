@@ -20,7 +20,8 @@ Do NOT forget to open your SSH port if you don't use `firewall_auto_open_ssh`!
 Requirements
 ------------
 
-This role uses [ufw module](http://docs.ansible.com/ansible/ufw_module.html). You need at least Ansible 1.6.
+- Ansible >= 2.11
+- Collections: community.general / ansible.netcommon
 
 Role Variables
 --------------

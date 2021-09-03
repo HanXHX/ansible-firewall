@@ -7,7 +7,7 @@ galaxy_info:
   description: Simple firewall for Debian/Ubuntu
   company:
   license: GPLv2
-  min_ansible_version: 2.8
+  min_ansible_version: 2.11
   platforms:
     - name: Ubuntu
       versions:

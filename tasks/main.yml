@@ -1,21 +1,21 @@
 ---
 
 - name: APT | Install ufw
-  apt:
+  ansible.builtin.apt:
     pkg: ufw
     update_cache: true
     cache_valid_time: 3600
 
 - name: UFW | Reset firewall
-  ufw:
+  community.general.ufw:
     state: reset
   when: firewall_reset
 
-- name: INCLUDE | Config
-  include: config.yml
+- name: IMPORT_TASKS | Config
+  ansible.builtin.import_tasks: config.yml
 
-- name: INCLUDE | DNS
-  include: dns.yml
+- name: IMPORT_TASKS | DNS
+  ansible.builtin.import_tasks: dns.yml
 
-- name: INCLUDE | Firewall
-  include: firewall.yml
+- name: IMPORT_TASKS | Firewall
+  ansible.builtin.import_tasks: firewall.yml

@@ -1,7 +1,7 @@
 ---
 
 - name: LINEINFILE | Enable / Disable IPv6
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/default/ufw
     regexp: '^IPV6='
     line: "IPV6={{ 'yes' if firewall_enable_ipv6 else 'no' }}"
@@ -10,7 +10,7 @@
     - ufw enable
 
 - name: LINEINFILE | Manage modules
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/default/ufw
     regexp: '^IPT_MODULES='
     line: "IPT_MODULES=\"{{ firewall_kernel_modules | join(' ') }}\""

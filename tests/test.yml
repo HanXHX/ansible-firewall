@@ -5,7 +5,7 @@
     - ../../
   post_tasks:
     - name: APT | Install debug tools
-      apt:
+      ansible.builtin.apt:
         pkg: "{{ pkgs }}"
       vars:
         pkgs: ['netcat-openbsd', 'tcpdump']
