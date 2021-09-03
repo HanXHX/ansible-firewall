@@ -9,7 +9,8 @@ Vagrant.configure("2") do |config|
     [ "debian-wheezy", "debian/wheezy64" ],
     [ "debian-jessie", "debian/jessie64" ],
     [ "debian-stretch", "debian/stretch64" ],
-    [ "debian-buster", "debian/buster64" ]
+    [ "debian-buster", "debian/buster64" ],
+    [ "debian-bullseye", "debian/bullseye64" ],
   ]
 
   config.vm.provider "virtualbox" do |v|
